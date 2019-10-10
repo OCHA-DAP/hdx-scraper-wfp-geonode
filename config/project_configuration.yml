@@ -1,0 +1,11 @@
+# Collector specific configuration
+base_url: 'https://geonode.wfp.org'
+ignore_data:
+  - 'humanitarian data exchange'
+titleabstract_mapping:
+  ffa:
+    - 'food assistance'
+  'food for assets':
+    - 'food assistance'
+
+
