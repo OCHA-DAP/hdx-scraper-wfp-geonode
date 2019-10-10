@@ -8,10 +8,8 @@ import logging
 from os.path import join, expanduser
 
 from hdx.hdx_configuration import Configuration
-from hdx.location.country import Country
+from hdx.scraper.geonode.geonodetohdx import GeoNodeToHDX
 from hdx.utilities.downloader import Download
-
-from wfp import generate_dataset_and_showcase, get_layersdata, get_locationsdata
 
 from hdx.facades.simple import facade
 
@@ -25,17 +23,16 @@ def main():
 
     with Download() as downloader:
         base_url = Configuration.read()['base_url']
-        countriesdata = get_locationsdata(base_url, downloader)
-        logger.info('Number of countries: %d' % len(countriesdata))
-        for location in countriesdata:
-            countrycode = location['code']
-            countryname = Country.get_country_name_from_iso3(countrycode)
-            if countryname is None:
-                continue
-            layersdata = get_layersdata(base_url, downloader, countrycode)
-            logger.info('Number of datasets to upload in %s: %d' % (countryname, len(layersdata)))
-            for layerdata in layersdata:
-                dataset, showcase = generate_dataset_and_showcase(base_url, countrycode, layerdata)
+        geonodetohdx = GeoNodeToHDX(base_url, downloader)
+        geonodetohdx.get_ignore_data().extend(Configuration.read()['ignore_data'])
+        geonodetohdx.get_titleabstract_mapping().update(Configuration.read()['titleabstract_mapping'])
+        countries = geonodetohdx.get_countries()
+        logger.info('Number of countries: %d' % len(countries))
+        for countrycode, countryname in countries:
+            layers = geonodetohdx.get_layers(countrycode)
+            logger.info('Number of datasets to upload in %s: %d' % (countryname, len(layers)))
+            for layer in layers:
+                dataset, showcase = geonodetohdx.generate_dataset_and_showcase(countrycode, layer, 'd7a13725-5cb5-48f4-87ac-a70b5cea531e', '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP')
                 if dataset:
                     dataset.update_from_yaml()
                     dataset.create_in_hdx(remove_additional_resources=True)
