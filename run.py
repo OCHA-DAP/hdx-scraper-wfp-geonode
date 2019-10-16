@@ -35,7 +35,7 @@ def main():
                 dataset, showcase = geonodetohdx.generate_dataset_and_showcase(countrycode, layer, 'd7a13725-5cb5-48f4-87ac-a70b5cea531e', '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP')
                 if dataset:
                     dataset.update_from_yaml()
-                    dataset.create_in_hdx(remove_additional_resources=True)
+                    dataset.create_in_hdx(remove_additional_resources=True, hxl_update=False)
                     showcase.create_in_hdx()
                     showcase.add_dataset(dataset)
 
