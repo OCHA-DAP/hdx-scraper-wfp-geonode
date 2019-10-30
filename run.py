@@ -4,6 +4,7 @@
 Top level script. Calls other functions that generate datasets that this script then creates in HDX.
 
 """
+import argparse
 import logging
 from os.path import join, expanduser
 
@@ -41,6 +42,14 @@ def main():
 
 
 if __name__ == '__main__':
-    facade(main, user_agent_config_yaml=join(expanduser('~'), '.useragents.yml'), user_agent_lookup=lookup, project_config_yaml=join('config', 'project_configuration.yml'))
+#    facade(main, user_agent_config_yaml=join(expanduser('~'), '.useragents.yml'), user_agent_lookup=lookup, project_config_yaml=join('config', 'project_configuration.yml'))
+    parser = argparse.ArgumentParser(description='hdx-scraper-wfp-geonode')
+    parser.add_argument('-hk', '--hdx_key', default=None, help='HDX api key')
+    parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
+    args = parser.parse_args()
+    hdx_site = args.hdx_site
+    if hdx_site is None:
+        hdx_site = 'feature'
+    facade(main, hdx_key=args.hdx_key, hdx_site=hdx_site, user_agent='WFPGeoNode')
 
 
