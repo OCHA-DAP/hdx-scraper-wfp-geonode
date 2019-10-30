@@ -50,6 +50,6 @@ if __name__ == '__main__':
     hdx_site = args.hdx_site
     if hdx_site is None:
         hdx_site = 'feature'
-    facade(main, hdx_key=args.hdx_key, hdx_site=hdx_site, user_agent='WFPGeoNode')
+    facade(main, hdx_key=args.hdx_key, hdx_site=hdx_site, user_agent='WFPGeoNode', project_config_yaml=join('config', 'project_configuration.yml'))
 
 
