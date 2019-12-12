@@ -27,19 +27,9 @@ def main():
         geonodetohdx = GeoNodeToHDX(base_url, downloader)
         geonodetohdx.get_ignore_data().extend(Configuration.read()['ignore_data'])
         geonodetohdx.get_titleabstract_mapping().update(Configuration.read()['titleabstract_mapping'])
-
-        def create_dataset_showcase(dataset, showcase):  # FOR TESTING ONLY
-            dataset.update_from_yaml()
-            dataset['organization'] = {'name': 'wfp'}
-
         datasets = geonodetohdx.generate_datasets_and_showcases('d7a13725-5cb5-48f4-87ac-a70b5cea531e',
-                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP',
-                                                                create_dataset_showcase=create_dataset_showcase)
-
-        def delete_from_hdx(dataset):  # FOR TESTING ONLY
-            pass
-
-        geonodetohdx.delete_other_datasets(datasets, delete_from_hdx=delete_from_hdx)
+                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP')
+        geonodetohdx.delete_other_datasets(datasets)
 
 
 if __name__ == '__main__':
