@@ -27,22 +27,22 @@ def main():
         geonodetohdx = GeoNodeToHDX(base_url, downloader)
         geonodetohdx.get_ignore_data().extend(Configuration.read()['ignore_data'])
         geonodetohdx.get_titleabstract_mapping().update(Configuration.read()['titleabstract_mapping'])
-        countries = geonodetohdx.get_countries()
-        logger.info('Number of countries: %d' % len(countries))
-        for countrycode, countryname in countries:
-            layers = geonodetohdx.get_layers(countrycode)
-            logger.info('Number of datasets to upload in %s: %d' % (countryname, len(layers)))
-            for layer in layers:
-                dataset, showcase = geonodetohdx.generate_dataset_and_showcase(countrycode, layer, 'd7a13725-5cb5-48f4-87ac-a70b5cea531e', '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP')
-                if dataset:
-                    dataset.update_from_yaml()
-                    dataset.create_in_hdx(remove_additional_resources=True, hxl_update=False)
-                    showcase.create_in_hdx()
-                    showcase.add_dataset(dataset)
+
+        def create_dataset_showcase(dataset, showcase):  # FOR TESTING ONLY
+            dataset.update_from_yaml()
+            dataset['organization'] = {'name': 'wfp'}
+
+        datasets = geonodetohdx.generate_datasets_and_showcases('d7a13725-5cb5-48f4-87ac-a70b5cea531e',
+                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP',
+                                                                create_dataset_showcase=create_dataset_showcase)
+
+        def delete_from_hdx(dataset):  # FOR TESTING ONLY
+            pass
+
+        geonodetohdx.delete_other_datasets(datasets, delete_from_hdx=delete_from_hdx)
 
 
 if __name__ == '__main__':
-#    facade(main, user_agent_config_yaml=join(expanduser('~'), '.useragents.yml'), user_agent_lookup=lookup, project_config_yaml=join('config', 'project_configuration.yml'))
     parser = argparse.ArgumentParser(description='hdx-scraper-wfp-geonode')
     parser.add_argument('-hk', '--hdx_key', default=None, help='HDX api key')
     parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
