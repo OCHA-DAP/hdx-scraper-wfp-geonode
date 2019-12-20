@@ -6,7 +6,7 @@ Top level script. Calls other functions that generate datasets that this script 
 """
 import argparse
 import logging
-from os.path import join, expanduser
+from os.path import join
 
 from hdx.hdx_configuration import Configuration
 from hdx.scraper.geonode.geonodetohdx import GeoNodeToHDX
