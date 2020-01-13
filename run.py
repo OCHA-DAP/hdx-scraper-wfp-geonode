@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 lookup = 'hdx-scraper-wfp-geonode'
 
 
+def create_dataset_showcase(dataset, showcase):
+    logger.info('Dataset date is %s' % dataset['dataset_date'])
+
+
 def main():
     """Generate dataset and create it in HDX"""
 
@@ -28,7 +32,9 @@ def main():
         geonodetohdx.get_ignore_data().extend(Configuration.read()['ignore_data'])
         geonodetohdx.get_titleabstract_mapping().update(Configuration.read()['titleabstract_mapping'])
         datasets = geonodetohdx.generate_datasets_and_showcases('d7a13725-5cb5-48f4-87ac-a70b5cea531e',
-                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP')
+                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP',
+                                                                get_date_from_title=True)
+#                                                                create_dataset_showcase=create_dataset_showcase)
         geonodetohdx.delete_other_datasets(datasets)
 
 
