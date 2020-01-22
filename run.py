@@ -34,8 +34,7 @@ def main():
         datasets = geonodetohdx.generate_datasets_and_showcases('d7a13725-5cb5-48f4-87ac-a70b5cea531e',
                                                                 '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP',
                                                                 get_date_from_title=True)
-#                                                                create_dataset_showcase=create_dataset_showcase)
-        geonodetohdx.delete_other_datasets(datasets)
+        geonodetohdx.delete_other_datasets(datasets, 'd7a13725-5cb5-48f4-87ac-a70b5cea531e', 'WFP')
 
 
 if __name__ == '__main__':
