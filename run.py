@@ -31,10 +31,11 @@ def main():
         geonodetohdx = GeoNodeToHDX(base_url, downloader)
         geonodetohdx.get_ignore_data().extend(Configuration.read()['ignore_data'])
         geonodetohdx.get_titleabstract_mapping().update(Configuration.read()['titleabstract_mapping'])
-        datasets = geonodetohdx.generate_datasets_and_showcases('d7a13725-5cb5-48f4-87ac-a70b5cea531e',
-                                                                '3ecac442-7fed-448d-8f78-b385ef6f84e7', 'WFP',
-                                                                get_date_from_title=True)
-        geonodetohdx.delete_other_datasets(datasets, 'd7a13725-5cb5-48f4-87ac-a70b5cea531e', 'WFP')
+        metadata = {'maintainerid': 'd7a13725-5cb5-48f4-87ac-a70b5cea531e',
+                    'orgid': '3ecac442-7fed-448d-8f78-b385ef6f84e7'}
+        datasets = geonodetohdx.generate_datasets_and_showcases(metadata, get_date_from_title=True,
+                                                                updated_by_script='HDX Scraper: WFP GeoNode run by WFP')
+        geonodetohdx.delete_other_datasets(datasets, metadata)
 
 
 if __name__ == '__main__':
