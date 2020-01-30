@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 lookup = 'hdx-scraper-wfp-geonode'
 
 
-def create_dataset_showcase(dataset, showcase):
+def create_dataset_showcase(dataset, showcase, **kwargs):
     logger.info('Dataset date is %s' % dataset['dataset_date'])
 
 
