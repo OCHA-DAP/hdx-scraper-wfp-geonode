@@ -8,7 +8,7 @@ import argparse
 import logging
 from os.path import join
 
-from hdx.hdx_configuration import Configuration
+from hdx.api.configuration import Configuration
 from hdx.scraper.geonode.geonodetohdx import GeoNodeToHDX
 from hdx.utilities.downloader import Download
 
