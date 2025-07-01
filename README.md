@@ -1,4 +1,5 @@
-### Collector for WFP's Datasets
+# DEPRECATED - Pipeline discontinued
+## Collector for WFP's Datasets
 
 This script connects to the [WFP API](https://geonode.wfp.org/layers/) and extracts data layer by layer creating a dataset per layer in HDX. It makes 200 reads from WFP and 2500 read/writes (API calls) to HDX in a one hour period. It is run every year.
 
